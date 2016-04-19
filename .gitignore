@@ -3,3 +3,4 @@ devops/secret_files/*
 *.pyc
 hello_webapp.ini
 devops/hosts
+temp/*

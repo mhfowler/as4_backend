@@ -46,7 +46,7 @@ def save_note_endpoint():
     lines = text.split('\n')
     title = lines[0]
     save_note_to_dropbox(title=title, text=text)
-    _log('++ saved note')
+    _log('++ saved note: '.format(text))
     return 'saved'
 
 

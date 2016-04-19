@@ -15,6 +15,10 @@ SECRETS_DICT = json.loads(open(SECRETS_PATH, "r").read())
 LOCAL = os.environ.get('LOCAL')
 DEBUG = LOCAL
 
+# TEMP
+TEMP_PATH = os.path.join(PROJECT_PATH, 'temp')
+if not os.path.exists(TEMP_PATH):
+    os.makedirs(TEMP_PATH)
 
 # temporary settings below
 
