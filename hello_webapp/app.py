@@ -45,10 +45,15 @@ def save_note_endpoint():
     text = request.form['text']
     lines = text.split('\n')
     title = lines[0]
+    # quick loop to choose title
+    for line in lines:
+        if not line.startswith('url:'):
+            title = line
+            break
     stripped_title = title.replace(' ', '_')
     stripped_title = re.sub(r'[\W]+', '', stripped_title)
     save_note_to_dropbox(title=stripped_title, text=text)
-    _log('++ saved note: '.format(text))
+    _log('++ saved note: {}'.format(text))
     return 'saved'
 
 
