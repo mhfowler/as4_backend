@@ -47,7 +47,7 @@ def save_note_endpoint():
     title = lines[0]
     # quick loop to choose title
     for line in lines:
-        if not line.startswith('url:'):
+        if line and not line.startswith('url:'):
             title = line
             break
     stripped_title = title.replace(' ', '_')
