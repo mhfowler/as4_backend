@@ -45,7 +45,8 @@ def save_note_endpoint():
     text = request.form['text']
     lines = text.split('\n')
     title = lines[0]
-    save_note_to_dropbox(title=title, text=text)
+    stripped_title = re.sub(r'\W+', '', title)
+    save_note_to_dropbox(title=stripped_title, text=text)
     _log('++ saved note: '.format(text))
     return 'saved'
 
