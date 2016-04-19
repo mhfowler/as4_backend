@@ -50,7 +50,6 @@ def save_note_endpoint():
     return 'saved'
 
 
-
 @app.route('/static/<path:path>')
 def send_static(path):
     """
