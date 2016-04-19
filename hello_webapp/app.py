@@ -9,6 +9,7 @@ from flask import jsonify, request
 
 from hello_settings import PROJECT_PATH, get_db_url, DEBUG
 from hello_utilities.log_helper import _log
+from hello_utilities.dropbox_helper import save_note_to_dropbox
 from hello_webapp.helper_routes import get_hello_helpers_blueprint
 from hello_models.database import db_session
 
@@ -37,6 +38,17 @@ app.register_blueprint(hello_helpers)
 @app.route("/")
 def hello_page():
     return render_template("hello.html")
+
+
+@app.route("/save_note/", methods=['POST'])
+def save_note_endpoint():
+    text = request.form['text']
+    lines = text.split('\n')
+    title = lines[0]
+    save_note_to_dropbox(title=title, text=text)
+    _log('++ saved note')
+    return 'saved'
+
 
 
 @app.route('/static/<path:path>')
