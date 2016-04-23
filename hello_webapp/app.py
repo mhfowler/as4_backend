@@ -10,6 +10,7 @@ from flask import jsonify, request
 from hello_settings import PROJECT_PATH, get_db_url, DEBUG, NOTES_CHANNEL
 from hello_utilities.log_helper import _log
 from hello_utilities.dropbox_helper import save_note_to_dropbox
+from hello_utilities.process_note import process_note
 from hello_webapp.helper_routes import get_hello_helpers_blueprint
 from hello_models.database import db_session
 
@@ -43,6 +44,7 @@ def hello_page():
 @app.route("/save_note/", methods=['POST'])
 def save_note_endpoint():
     text = request.form['text']
+    text += ' '
     lines = text.split('\n')
     title = lines[0]
     # quick loop to choose title
@@ -55,6 +57,8 @@ def save_note_endpoint():
     save_note_to_dropbox(title=stripped_title, text=text)
     _log('++ saved note: {}'.format(stripped_title))
     _log('-----\n{}'.format(text), channel_id=NOTES_CHANNEL)
+    # process note nad initiate functions based on hashtags
+    process_note(text=text)
     return 'saved'
 
 
