@@ -83,3 +83,14 @@
         - { from: 'secret_files/deploy_rsa.pub', to: '/root/.ssh/id_rsa.pub', mode: '0644' }
         - { from: 'secret_files/deploy_rsa', to: '/root/.ssh/id_rsa', mode: '0600' }
 
+    - name: make ssl directory
+      action: file dest=/etc/nginx/ssl state=directory
+
+    - name: copy ssl key and cert
+      action: copy src={{item.from}} dest={{item.to}}
+      with_items:
+        - { from: 'secret_files/nginx.crt', to: '/etc/nginx/ssl/nginx.crt' }
+        - { from: 'secret_files/nginx.key', to: '/etc/nginx/ssl/nginx.key' }
+
+
+
