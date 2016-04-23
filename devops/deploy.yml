@@ -39,8 +39,8 @@
     - name: Copy secret.json file
       copy: src=secret_files/secret.json dest={{src_dir}}/devops/secret_files/secret.json
 
-    - name: Copy environment.json file
-      copy: template src=templates/prod_environment.json dest={{src_dir}}/environment.json
+#    - name: Copy environment.json file
+#      copy: template src=templates/prod_environment.json dest={{src_dir}}/environment.json
 
     - name: make src_dir writeable by webgroup
       action: file path={{src_dir}} mode=u=rwX,g=rwX,o=X recurse=yes group=webgroup
