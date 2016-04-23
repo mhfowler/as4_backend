@@ -11,6 +11,7 @@ from hello_settings import PROJECT_PATH, get_db_url, DEBUG, NOTES_CHANNEL
 from hello_utilities.log_helper import _log
 from hello_utilities.dropbox_helper import save_note_to_dropbox
 from hello_utilities.process_note import process_note
+from hello_utilities.process_note import strip_data
 from hello_webapp.helper_routes import get_hello_helpers_blueprint
 from hello_models.database import db_session
 
@@ -45,13 +46,8 @@ def hello_page():
 def save_note_endpoint():
     text = request.form['text']
     text += ' '
-    lines = text.split('\n')
-    title = lines[0]
-    # quick loop to choose title
-    for line in lines:
-        if line and not line.startswith('url:'):
-            title = line
-            break
+    note_text = strip_data(text)
+    title = note_text.split('\n')[0]
     stripped_title = title.replace(' ', '_')
     stripped_title = re.sub(r'[\W]+', '', stripped_title)
     save_note_to_dropbox(title=stripped_title, text=text)
