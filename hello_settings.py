@@ -11,8 +11,19 @@ SECRETS_PATH = os.path.join(PROJECT_PATH, 'devops/secret_files/secret.json')
 SECRETS_DICT = json.loads(open(SECRETS_PATH, "r").read())
 
 
-# are we local
-LOCAL = os.environ.get('LOCAL')
+# environment dict (different from machine to machine)
+ENVIRON_PATH = os.path.join(PROJECT_PATH, 'environment.json')
+ENVIRON_DICT = json.loads(open(ENVIRON_PATH, "r").read())
+
+# which environment are we in
+ENVIRON = os.environ.get('HELLO_ENVIRON') or ENVIRON_DICT['ENVIRON']
+LOCAL = False
+DEV = False
+PROD = False
+if ENVIRON == 'LOCAL':
+    LOCAL = True
+elif ENVIRON == 'PROD':
+    PROD = True
 DEBUG = LOCAL
 
 # TEMP

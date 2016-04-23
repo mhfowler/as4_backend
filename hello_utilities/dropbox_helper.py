@@ -1,5 +1,6 @@
 import tempfile
 import os
+import random
 
 import dropbox
 
@@ -11,6 +12,8 @@ client = dropbox.client.DropboxClient(SECRETS_DICT['DROPBOX_ACCESS_TOKEN'])
 
 
 def save_note_to_dropbox(title, text):
+    if not title:
+        title = str(random.randint(0, 10000000))
     temp_path = os.path.join(TEMP_PATH, title)
     with open(temp_path, 'w') as f:
         f.write(text)

@@ -10,6 +10,9 @@ slackclient==0.18.0
 dropbox==6.1
 requests==2.9.1
 PyTumblr==0.0.6
+pyOpenSSL==16.0.0
+
+
 
 
 

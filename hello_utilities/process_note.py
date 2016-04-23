@@ -17,8 +17,9 @@ def strip_data(text):
 
 
 def tumblr_post_img(text):
-    img_match = re.match('img: (.*)\n', text)
+    img_match = re.search('img:(.*)\n', text)
     if img_match:
+        _log('++ saving image to tumblr', debug=True)
         url = img_match.group(1)
         note_text = strip_data(text)
         post_photo_to_tumblr(photo_url=url, caption=note_text)
@@ -26,7 +27,7 @@ def tumblr_post_img(text):
 
 def process_note(text):
     hashtags = get_hashtags(text)
-    _log('++ found hashtags: {}'.format(str(hashtags)))
+    _log('++ found hashtags: {}'.format(str(hashtags)), debug=True)
     if 'meme' in hashtags:
         tumblr_post_img(text)
 

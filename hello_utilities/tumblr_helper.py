@@ -13,8 +13,14 @@ client = pytumblr.TumblrRestClient(
 
 
 def post_photo_to_tumblr(photo_url, caption):
-    created = client.create_photo('memecollections.tumblr.com', caption=caption, state="published", source=photo_url)
-    _log('++ new tumblr post: {}'.format(created['id']))
+    tumblr = 'memecollections.tumblr.com'
+    photo_url = photo_url.strip()
+    created = client.create_photo(tumblr, caption=caption, state="published", source=photo_url)
+    post_url = 'http://{tumblr}/image/{id}'.format(
+        tumblr=tumblr,
+        id=created['id']
+    )
+    _log('++ new tumblr post: {}'.format(post_url))
 
 
 if __name__ == '__main__':

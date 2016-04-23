@@ -47,13 +47,21 @@ def save_note_endpoint():
     text = request.form['text']
     text += ' '
     note_text = strip_data(text)
-    title = note_text.split('\n')[0]
+    note_text_lines = note_text.split('\n')
+    title = ''
+    # quick loop to find first non blank line, and use that as title
+    for line in note_text_lines:
+        if line:
+            title = line
+            break
+    # strip special char from title
     stripped_title = title.replace(' ', '_')
     stripped_title = re.sub(r'[\W]+', '', stripped_title)
+    # save note to dropbox and log note to slack
     save_note_to_dropbox(title=stripped_title, text=text)
     _log('++ saved note: {}'.format(stripped_title))
-    _log('-----\n{}'.format(text), channel_id=NOTES_CHANNEL)
-    # process note nad initiate functions based on hashtags
+    _log('++: {title}\n{text}'.format(title=title, text=text), channel_id=NOTES_CHANNEL)
+    # process note and initiate functions based on hashtags
     process_note(text=text)
     return 'saved'
 
