@@ -11,7 +11,7 @@ SECRETS_PATH = os.path.join(PROJECT_PATH, 'devops/secret_files/secret.json')
 SECRETS_DICT = json.loads(open(SECRETS_PATH, "r").read())
 
 
-# are we local?
+# are we local
 LOCAL = os.environ.get('LOCAL')
 DEBUG = LOCAL
 
@@ -21,8 +21,9 @@ if not os.path.exists(TEMP_PATH):
     os.makedirs(TEMP_PATH)
 
 
-# constants
+# settings
 NOTES_CHANNEL = 'C135CHY1H'
+VERBOSE_LOG = True
 
 # temporary settings below
 

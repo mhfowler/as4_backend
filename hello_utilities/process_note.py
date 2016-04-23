@@ -1,6 +1,7 @@
 import re
 
 from hello_utilities.tumblr_helper import post_photo_to_tumblr
+from hello_utilities.log_helper import _log
 
 
 def get_hashtags(text):
@@ -25,6 +26,7 @@ def tumblr_post_img(text):
 
 def process_note(text):
     hashtags = get_hashtags(text)
+    _log('++ found hashtags: {}'.format(str(hashtags)))
     if 'meme' in hashtags:
         tumblr_post_img(text)
 
