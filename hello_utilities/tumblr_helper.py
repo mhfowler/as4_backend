@@ -12,8 +12,7 @@ client = pytumblr.TumblrRestClient(
 )
 
 
-def post_photo_to_tumblr(photo_url, caption):
-    tumblr = 'memecollections.tumblr.com'
+def post_photo_to_tumblr(photo_url, caption, tumblr='memecollections.tumblr.com'):
     photo_url = photo_url.strip()
     created = client.create_photo(tumblr, caption=caption, state="published", source=photo_url)
     post_url = 'http://{tumblr}/image/{id}'.format(
