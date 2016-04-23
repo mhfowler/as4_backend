@@ -7,7 +7,7 @@ from flask import Flask, render_template, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask import jsonify, request
 
-from hello_settings import PROJECT_PATH, get_db_url, DEBUG
+from hello_settings import PROJECT_PATH, get_db_url, DEBUG, NOTES_CHANNEL
 from hello_utilities.log_helper import _log
 from hello_utilities.dropbox_helper import save_note_to_dropbox
 from hello_webapp.helper_routes import get_hello_helpers_blueprint
@@ -53,7 +53,8 @@ def save_note_endpoint():
     stripped_title = title.replace(' ', '_')
     stripped_title = re.sub(r'[\W]+', '', stripped_title)
     save_note_to_dropbox(title=stripped_title, text=text)
-    _log('++ saved note: {}'.format(text))
+    _log('++ saved note: {}'.format(text.split('\n')[0]))
+    _log('-----\n{}'.format(text), channel_id=NOTES_CHANNEL)
     return 'saved'
 
 

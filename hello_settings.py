@@ -20,6 +20,10 @@ TEMP_PATH = os.path.join(PROJECT_PATH, 'temp')
 if not os.path.exists(TEMP_PATH):
     os.makedirs(TEMP_PATH)
 
+
+# constants
+NOTES_CHANNEL = 'C135CHY1H'
+
 # temporary settings below
 
 
