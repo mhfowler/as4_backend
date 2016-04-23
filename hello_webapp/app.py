@@ -53,7 +53,7 @@ def save_note_endpoint():
     stripped_title = title.replace(' ', '_')
     stripped_title = re.sub(r'[\W]+', '', stripped_title)
     save_note_to_dropbox(title=stripped_title, text=text)
-    _log('++ saved note: {}'.format(text.split('\n')[0]))
+    _log('++ saved note: {}'.format(stripped_title))
     _log('-----\n{}'.format(text), channel_id=NOTES_CHANNEL)
     return 'saved'
 
