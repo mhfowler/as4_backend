@@ -14,6 +14,8 @@ client = EvernoteClient(token=SECRETS_DICT['EVERNOTE_TOKEN'], sandbox=False)
 
 def save_evernote(note_title, note_text, notebook_name):
     _log('++ saving evernote: {}'.format(note_title), debug=True)
+    # strip title
+    note_title = note_title.strip()
     # first get the notebook guid
     notebook_guid = get_or_create_notebook(name=notebook_name)
     # find links in the note, and replaces with a
@@ -61,7 +63,8 @@ def get_or_create_notebook(name):
 
 
 if __name__ == '__main__':
+    note_text = u'url: http://heimspiel.tv/\n\ncman test '
     save_evernote(
-        note_title='test token',
-        note_text='new token: test evernote with image link: https://49.media.tumblr.com/faf7df3a35903046215ac67f5c0cde2b/tumblr_o64ev51pcp1rdqms8o1_500.gif  ',
+        note_title='note title test',
+        note_text='url: http://good-music.com/\n\ntest test ',
         notebook_name='as4')
