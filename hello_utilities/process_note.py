@@ -56,7 +56,18 @@ def process_note(text, title):
     # remove hashtags from note and put them at the bottom
     lines = text.split('\n')
     lines = [strip_line(line) for line in lines]
-    simplenote_text = '\n'.join(lines)
+    note_lines = filter(lambda line: not (line.startswith('source: ') or line.startswith('img: ')), lines)
+    source_lines = filter(lambda line: line.startswith('source: '), lines)
+    img_lines = filter(lambda line: line.startswith('img: '), lines)
+    simplenote_text = '\n'.join(note_lines)
+    # remove any initial blank lines
+    while simplenote_text and simplenote_text[0] == '\n':
+        simplenote_text = simplenote_text[1:]
+    # append img and source lines to note
+    if img_lines:
+        simplenote_text += '\n\n' + '\n'.join(img_lines)
+    if source_lines:
+        simplenote_text += '\n\n' + '\n'.join(source_lines)
     # add metadata to the bottom
     hashtag_line = ' '.join([('#' + tag) for tag in hashtags])
     simplenote_text += '\n' + hashtag_line
@@ -70,7 +81,7 @@ if __name__ == '__main__':
 
     note_text = 'source: https://www.tumblr.com/dashboard\n\n' \
                 'img: https://40.media.tumblr.com/tumblr_luyygcHHPZ1qh2axio1_1280.jpg\n\n' \
-                'stop the war \meme '
+                'stop the war'
 
     process_note(text=note_text,
                  title='test as4')
