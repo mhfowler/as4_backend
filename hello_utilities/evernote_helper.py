@@ -13,6 +13,7 @@ client = EvernoteClient(token=SECRETS_DICT['EVERNOTE_TOKEN'], sandbox=False)
 
 
 def save_evernote(note_title, note_text, notebook_name):
+    _log('++ saving evernote: {}'.format(note_title), debug=True)
     # first get the notebook guid
     notebook_guid = get_or_create_notebook(name=notebook_name)
     # find links in the note, and replaces with a
