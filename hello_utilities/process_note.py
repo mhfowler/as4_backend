@@ -63,11 +63,16 @@ def process_note(text, title):
     # remove any initial blank lines
     while simplenote_text and simplenote_text[0] == '\n':
         simplenote_text = simplenote_text[1:]
+    # if simplenote_text does not add with newlines then add 2
+    if simplenote_text[-1] != '\n':
+        simplenote_text += '\n'
+    if simplenote_text[-2] != '\n':
+        simplenote_text += '\n'
     # append img and source lines to note
     if img_lines:
-        simplenote_text += '\n\n' + '\n'.join(img_lines)
+        simplenote_text += '\n'.join(img_lines) + '\n\n'
     if source_lines:
-        simplenote_text += '\n\n' + '\n'.join(source_lines)
+        simplenote_text += '\n'.join(source_lines) + '\n\n'
     # add metadata to the bottom
     hashtag_line = ' '.join([('#' + tag) for tag in hashtags])
     simplenote_text += '\n' + hashtag_line
@@ -81,7 +86,7 @@ if __name__ == '__main__':
 
     note_text = 'source: https://www.tumblr.com/dashboard\n\n' \
                 'img: https://40.media.tumblr.com/tumblr_luyygcHHPZ1qh2axio1_1280.jpg\n\n' \
-                'stop the war'
+                'stop the war\n\n'
 
     process_note(text=note_text,
                  title='test as4')
