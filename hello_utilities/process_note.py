@@ -3,6 +3,7 @@ import re
 from hello_utilities.tumblr_helper import post_photo_to_tumblr
 from hello_utilities.log_helper import _log
 from hello_utilities.evernote_helper import save_evernote
+from hello_utilities.simplenote_helper import save_simplenote
 
 
 def get_hashtags(text):
@@ -44,9 +45,13 @@ def process_note(text, title):
         notebook_name = 'as4'
     else:
         notebook_name = tags.pop()
+    # save a simplenote
+    tags.add('as4notes')
+    save_simplenote(note_text=text, tags=list(tags))
+    # save an evernote
     save_evernote(note_title=title, note_text=text, notebook_name=notebook_name)
 
 
 if __name__ == '__main__':
     process_note('img: https://41.media.tumblr.com/a02410dc6a319722b3c77207e7a3b039/tumblr_o5uc36xK271qcphy8o1_1280.jpg\n'
-                 '\nhello test\n #cl ', title='test as4')
+                 '\nhello test\n #test #banana', title='test as4')
