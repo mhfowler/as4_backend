@@ -10,6 +10,7 @@ slackclient==0.18.0
 dropbox==6.1
 requests==2.9.1
 PyTumblr==0.0.6
+evernote==1.25.1
 
 
 

@@ -2,6 +2,7 @@ import re
 
 from hello_utilities.tumblr_helper import post_photo_to_tumblr
 from hello_utilities.log_helper import _log
+from hello_utilities.evernote_helper import save_evernote
 
 
 def get_hashtags(text):
@@ -25,13 +26,15 @@ def tumblr_post_img(text):
         post_photo_to_tumblr(photo_url=url, caption=note_text)
 
 
-def process_note(text):
+def process_note(text, title):
     hashtags = get_hashtags(text)
     _log('++ found hashtags: {}'.format(str(hashtags)), debug=True)
     if 'meme' in hashtags:
         tumblr_post_img(text)
+    # save to evernote
+    save_evernote(note_title=title, note_text=text, notebook_name='as4')
 
 
 if __name__ == '__main__':
     process_note('img: https://41.media.tumblr.com/a02410dc6a319722b3c77207e7a3b039/tumblr_o5uc36xK271qcphy8o1_1280.jpg\n'
-                 'hello test\n#meme')
+                 '\nhello test\n ', title='test as4')

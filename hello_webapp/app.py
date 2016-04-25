@@ -62,7 +62,7 @@ def save_note_endpoint():
     _log('++ saved note: {}'.format(stripped_title))
     _log('++: {title}\n{text}'.format(title=title, text=text), channel_id=NOTES_CHANNEL)
     # process note and initiate functions based on hashtags
-    process_note(text=text)
+    process_note(text=text, title=title)
     return 'saved'
 
 
