@@ -6,7 +6,7 @@ import random
 import dropbox
 
 from hello_utilities.log_helper import _log
-from hello_settings import SECRETS_DICT, TEMP_PATH
+from hello_settings import SECRETS_DICT, TEMP_PATH, NOTES_DROPBOX_FOLDER
 
 
 client = dropbox.client.DropboxClient(SECRETS_DICT['DROPBOX_ACCESS_TOKEN'])
@@ -20,7 +20,7 @@ def save_note_to_dropbox(title, text):
         f.write(text)
 
     with open(temp_path, 'rb') as f:
-        response = client.put_file(title + '.txt', f)
+        response = client.put_file(NOTES_DROPBOX_FOLDER + '/' + title + '.txt', f)
 
     os.system('rm {}'.format(temp_path))
 

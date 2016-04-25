@@ -34,6 +34,7 @@ if not os.path.exists(TEMP_PATH):
 
 # settings
 NOTES_CHANNEL = 'C135CHY1H'
+NOTES_DROPBOX_FOLDER = '/as4_notes'
 VERBOSE_LOG = True
 
 # temporary settings below
