@@ -10,6 +10,11 @@ def get_hashtags(text):
     return hashtags
 
 
+def get_commands(text):
+    hashtags = {tag.strip("/") for tag in text.split() if tag.startswith("/")}
+    return hashtags
+
+
 def strip_data(text):
     lines = text.split('\n')
     note_lines = filter(lambda line: not (line.startswith('url: ') or line.startswith('img: ')), lines)
@@ -27,14 +32,21 @@ def tumblr_post_img(text):
 
 
 def process_note(text, title):
-    hashtags = get_hashtags(text)
-    _log('++ found hashtags: {}'.format(str(hashtags)), debug=True)
-    if 'meme' in hashtags:
+    commands = get_commands(text)
+    _log('++ found commands: {}'.format(str(commands)), debug=True)
+    if 'meme' in commands:
         tumblr_post_img(text)
     # save to evernote
-    save_evernote(note_title=title, note_text=text, notebook_name='as4')
+    hashtags = get_hashtags(text)
+    _log('++ found hashtags: {}'.format(str(hashtags)), debug=True)
+    tags = get_hashtags(text)
+    if not tags:
+        notebook_name = 'as4'
+    else:
+        notebook_name = tags.pop()
+    save_evernote(note_title=title, note_text=text, notebook_name=notebook_name)
 
 
 if __name__ == '__main__':
     process_note('img: https://41.media.tumblr.com/a02410dc6a319722b3c77207e7a3b039/tumblr_o5uc36xK271qcphy8o1_1280.jpg\n'
-                 '\nhello test\n ', title='test as4')
+                 '\nhello test\n #cl ', title='test as4')
