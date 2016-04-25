@@ -40,19 +40,7 @@ def tumblr_post_img(text):
         post_photo_to_tumblr(photo_url=url, caption=note_text)
 
 
-def process_note(text, title):
-    commands = get_commands(text)
-    _log('++ found commands: {}'.format(str(commands)), debug=True)
-    if 'meme' in commands:
-        tumblr_post_img(text)
-    # save to evernote
-    hashtags = list(get_hashtags(text))
-    _log('++ found hashtags: {}'.format(str(hashtags)), debug=True)
-    if not hashtags:
-        notebook_name = 'as4'
-    else:
-        notebook_name = hashtags[0]
-    # save a simplenote
+def save_simplenote_helper(text, hashtags):
     # remove hashtags from note and put them at the bottom
     lines = text.split('\n')
     lines = [strip_line(line) for line in lines]
@@ -72,12 +60,31 @@ def process_note(text, title):
     if img_lines:
         simplenote_text += '\n'.join(img_lines) + '\n\n'
     if source_lines:
-        simplenote_text += '\n'.join(source_lines) + '\n\n'
+        simplenote_text += '\n'.join(source_lines)
     # add metadata to the bottom
     hashtag_line = ' '.join([('#' + tag) for tag in hashtags])
     simplenote_text += '\n' + hashtag_line
     hashtags.append('as4notes')
     save_simplenote(note_text=simplenote_text, tags=hashtags)
+
+
+def process_note(text, title):
+    # get commands
+    commands = get_commands(text)
+    _log('++ found commands: {}'.format(str(commands)), debug=True)
+    # trigger actions based on certain commands
+    if 'meme' in commands:
+        tumblr_post_img(text)
+    # get hashtags
+    hashtags = list(get_hashtags(text))
+    _log('++ found hashtags: {}'.format(str(hashtags)), debug=True)
+    # use a hashtag as an evernote notebook name
+    if not hashtags:
+        notebook_name = 'as4'
+    else:
+        notebook_name = hashtags[0]
+    # save a simplenote
+    save_simplenote_helper(text=text, hashtags=hashtags)
     # save an evernote
     save_evernote(note_title=title, note_text=text, notebook_name=notebook_name)
 
