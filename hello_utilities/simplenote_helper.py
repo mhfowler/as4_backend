@@ -24,7 +24,7 @@ def get_note(note_id):
 def save_simplenote(note_text, tags=None):
     if not tags: tags = []
     new_note = snote.add_note({
-        'content': note_text,
+        'content': note_text.encode('ascii', 'ignore'),
         'tags': tags
     })[0]
     _log('++ new simplenote: {}'.format(new_note['key']))

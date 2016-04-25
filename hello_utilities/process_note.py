@@ -7,12 +7,12 @@ from hello_utilities.simplenote_helper import save_simplenote
 
 
 def get_hashtags(text):
-    hashtags = {tag.strip("#") for tag in text.split() if tag.startswith("#")}
+    hashtags = {tag.strip("#").encode('ascii', 'ignore') for tag in text.split() if tag.startswith("#")}
     return hashtags
 
 
 def get_commands(text):
-    hashtags = {tag.strip("/") for tag in text.split() if tag.startswith("/")}
+    hashtags = {tag.strip("/").encode('ascii', 'ignore') for tag in text.split() if tag.startswith("/")}
     return hashtags
 
 
@@ -53,5 +53,5 @@ def process_note(text, title):
 
 
 if __name__ == '__main__':
-    process_note('img: https://41.media.tumblr.com/a02410dc6a319722b3c77207e7a3b039/tumblr_o5uc36xK271qcphy8o1_1280.jpg\n'
-                 '\nhello test\n #test #banana', title='test as4')
+    process_note('hello how are you?\n img: https://41.media.tumblr.com/a02410dc6a319722b3c77207e7a3b039/tumblr_o5uc36xK271qcphy8o1_1280.jpg\n'
+                 '\n\n #test #banana', title='test as4')
