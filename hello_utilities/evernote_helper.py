@@ -2,12 +2,14 @@ import re
 
 from evernote.api.client import EvernoteClient
 import evernote.edam.type.ttypes as Types
+import evernote.edam.userstore.constants as UserStoreConstants
+from evernote.api.client import EvernoteClient
 
 from hello_settings import SECRETS_DICT
 from hello_utilities.log_helper import _log
 
 
-client = EvernoteClient(token=SECRETS_DICT['EVERNOTE_DEV_TOKEN'])
+client = EvernoteClient(token=SECRETS_DICT['EVERNOTE_TOKEN'], sandbox=False)
 
 
 def save_evernote(note_title, note_text, notebook_name):
@@ -27,7 +29,7 @@ def save_evernote(note_title, note_text, notebook_name):
     note.content += '<en-note>{note_text}</en-note>'.format(note_text=note_text)
     note.notebookGuid = notebook_guid
     note = noteStore.createNote(note)
-    _log('++ new evernote note: https://sandbox.evernote.com/Home.action?#n={}'.format(note.guid))
+    _log('++ new evernote note: https://www.evernote.com/Home.action#n={}'.format(note.guid))
     return note.guid
 
 
@@ -59,6 +61,6 @@ def get_or_create_notebook(name):
 
 if __name__ == '__main__':
     save_evernote(
-        note_title='image link',
-        note_text='test evernote with image link: https://49.media.tumblr.com/faf7df3a35903046215ac67f5c0cde2b/tumblr_o64ev51pcp1rdqms8o1_500.gif  ',
-        notebook_name='notes')
+        note_title='test token',
+        note_text='new token: test evernote with image link: https://49.media.tumblr.com/faf7df3a35903046215ac67f5c0cde2b/tumblr_o64ev51pcp1rdqms8o1_500.gif  ',
+        notebook_name='as4')
