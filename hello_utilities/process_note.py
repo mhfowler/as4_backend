@@ -84,7 +84,7 @@ def process_note(text, title):
     else:
         notebook_name = hashtags[0]
     # save a simplenote
-    save_simplenote_helper(text=text, hashtags=hashtags)
+    # save_simplenote_helper(text=text, hashtags=hashtags)
     # save an evernote
     save_evernote(note_title=title, note_text=text, notebook_name=notebook_name)
 
