@@ -40,6 +40,17 @@ def tumblr_post_img(text):
         post_photo_to_tumblr(photo_url=url, caption=note_text)
 
 
+def evernote_format_text(text, hashtags, title):
+    formatted_text = reconfigure_note(text=text, hashtags=hashtags)
+    # remove title if it is the first line of the note
+    lines = formatted_text.split('\n')
+    if lines[0].strip() == title.strip():
+        lines = lines[1:]
+    formatted_text = '\n'.join(lines)
+    # return
+    return formatted_text
+
+
 def reconfigure_note(text, hashtags):
     lines = text.split('\n')
     lines = [strip_line(line) for line in lines]
@@ -91,7 +102,7 @@ def process_note(text, title):
     # save a simplenote
     # save_simplenote_helper(text=text, hashtags=hashtags)
     # save an evernote
-    note_text = reconfigure_note(text=text, hashtags=hashtags)
+    note_text = evernote_format_text(text=text, hashtags=hashtags, title=title)
     save_evernote(note_title=title, note_text=note_text, notebook_name=notebook_name)
 
 
@@ -99,7 +110,7 @@ if __name__ == '__main__':
 
     note_text = 'source: https://www.tumblr.com/dashboard\n\n' \
                 'img: https://40.media.tumblr.com/tumblr_luyygcHHPZ1qh2axio1_1280.jpg\n\n' \
-                'stop the war\n\n'
+                'stop the war \meme\n\n'
 
     process_note(text=note_text,
-                 title='test as4')
+                 title='stop the war')
